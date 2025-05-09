@@ -4,24 +4,25 @@ import About from "./Pages/About";
 import Contact from "./Pages/Contact";
 import Header from "./Pages/Header";
 import Login from "./Pages/Login";
-import Dashboard from "./Dashboard";
-import Home from "./Home";
-import Roles from "./Roles";
-import AddRole from "./AddRole";
-import EditRole from "./EditRole";
-import Users from "./Users";
-import AddUser from "./AddUser";
+import Dashboard from "./dashboard/Dashboard";
+import Home from "./dashboard/Home";
+import Roles from "./Roles/Roles";
+import AddRole from "./Roles/AddRole";
+import EditRole from "./Roles/EditRole";
+import Users from "./Users/Users";
+import AddUser from "./Users/AddUser";
 import SuccessMessage from "./SuccessMessage";
-import Hours from "./Hours";
-import EditHours from "./EditHours";
-import Leads from "./Leads";
-import AddLead from "./AddLead";
-import Courses from "./Courses";
-import AddCourse from "./AddCourse";
-import Tasks from "./Tasks";
-import AddTask from "./AddTask";
-import Logs from "./Logs";
+import Hours from "./Hours/Hours";
+import EditHours from "./Hours/EditHours";
+import Leads from "./Leads/Leads";
+import AddLead from "./Leads/AddLead";
+import Courses from "./Courses/Courses";
+import AddCourse from "./Courses/AddCourse";
+import Tasks from "./Tasks/Tasks";
+import AddTask from "./Tasks/AddTask";
+import Logs from "./Logs/Logs";
 import Profile from "./Profile";
+import Unauthorized from "./Pages/Unauthorized";
 import Footer from "./Pages/Footer";
 import "../assets/styles/Pages.css";
 
@@ -60,6 +61,7 @@ function MyRoutes() {
             <Route path="/dashboard/logs" element={<Logs />}></Route>
             <Route path="/dashboard/profile" element={<Profile />}></Route>
           </Route>
+          <Route path="/unauthorized" element={<Unauthorized />} />
         </Routes>
       </div>
       <Footer />

@@ -10,7 +10,7 @@ const dbSingleton = {
         host: "localhost",
         user: "root",
         password: "",
-        database: "leads_management_system",
+        database: "inquiry_management_system",
       });
 
       connection.connect((err) => {

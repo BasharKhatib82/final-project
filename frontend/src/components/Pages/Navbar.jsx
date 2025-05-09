@@ -1,40 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { NavLink, useNavigate, Link } from "react-router-dom";
+import { FiUserCheck } from "react-icons/fi";
 import logo from "../../assets/img/logo.png";
+import { useUser } from "../../components/Tools/UserContext";
 
 function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { user, logout } = useUser();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetch("http://localhost:3000/check-auth", { credentials: "include" })
-      .then((res) => res.json())
-      .then((data) => {
-        setIsLoggedIn(data.loggedIn);
-      })
-      .catch((error) => {
-        console.error("שגיאה בבדיקת התחברות:", error);
-      });
-  }, []);
-
   const handleLogout = () => {
-    fetch("http://localhost:3000/logout", {
-      method: "POST",
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then(() => {
-        setIsLoggedIn(false);
-        navigate("/");
-      })
-      .catch((error) => {
-        console.error("שגיאה בהתנתקות:", error);
-      });
+    logout();
+    navigate("/");
   };
 
   return (
     <div className="navbar">
-      <div className="navbar-links">
+      <div className="navbar-links fontBtnMenu">
         <NavLink
           to="/"
           className={({ isActive }) =>
@@ -60,25 +41,35 @@ function Navbar() {
           צור קשר
         </NavLink>
       </div>
+
       <Link to="/">
         <img className="logo" src={logo} alt="לוגו" />
       </Link>
-      {/* התחברות/התנתקות */}
-      <div className="navbar-links-login-out">
-        {!isLoggedIn ? (
-          <NavLink
-            to="/userlogin"
-            className={({ isActive }) =>
-              isActive ? "active-link" : "inactive-link"
-            }
-          >
-            התחברות
-          </NavLink>
-        ) : (
-          <button onClick={handleLogout} className="logout-button">
-            התנתקות
-          </button>
+
+      <div className="left-menu">
+        {user && (
+          <Link to="/dashboard" className="user-info">
+            <FiUserCheck size={18} color="#ffffff" />
+            <div>{user.user_name}</div>
+          </Link>
         )}
+
+        <div className="navbar-user-actions fontBtnMenu">
+          {user ? (
+            <button className="btn-logout fontBtnMenu" onClick={handleLogout}>
+              התנתקות
+            </button>
+          ) : (
+            <NavLink
+              to="/userlogin"
+              className={({ isActive }) =>
+                isActive ? "active-link" : "inactive-link"
+              }
+            >
+              התחברות
+            </NavLink>
+          )}
+        </div>
       </div>
     </div>
   );

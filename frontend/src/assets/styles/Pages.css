@@ -345,21 +345,17 @@ input[type="number"] {
 /* ---------------------------------------------------------------------------------------------- */
 /* עטיפת כפתור הוספה */
 
-.add-wrapper {
-  margin-bottom: 2rem;
-}
 /*  כפתור מעבר לדף הוספה */
 .btn-add-dash {
-  padding: 1rem 2.5rem;
+  padding: 1rem 2rem;
   background-color: #0053b4;
   color: white;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   border: none;
   border-radius: 7px;
   text-decoration: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-right: 5rem;
 }
 
 .btn-add-dash:hover {
@@ -1007,4 +1003,82 @@ FilterBarRTL {
 
 .unauthorized-btn:hover {
   background-color: #a80000;
+}
+
+/* OK : עיצוב תיבת חיפוש תפקיד לפי שם  */
+
+.filters-container {
+  padding-right: 2.5%;
+  max-width: 95%;
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap; /* תומך ברספונסיביות */
+  direction: rtl;
+  justify-content: space-between;
+}
+
+.status-select,
+.search-input {
+  color: gray;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  border-radius: 7px;
+  border: none;
+  background-color: #ffffffb0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+/* גודל קבוע שמסתדר גם בשורות מתחלפות */
+.status-select {
+  min-width: 40%;
+  margin-left: 1rem;
+}
+.status-select:focus {
+  border-color: #4a90e2;
+  outline: none;
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+}
+
+.status-select {
+  appearance: none; /* מסיר את החץ המובנה */
+  -webkit-appearance: none; /* לתמיכה בדפדפנים ישנים */
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23999' height='18' viewBox='0 0 24 24' width='18' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: left 0.8rem center;
+  background-size: 2rem;
+  padding-left: 2.5rem; /* פינוי מקום לאייקון */
+}
+.search-wrapper {
+  position: relative;
+  min-width: 40%;
+}
+
+.search-input {
+  min-width: 92.5%;
+}
+
+.search-input:focus {
+  border-color: #4a90e2;
+  outline: none;
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+}
+
+.clear-search {
+  position: absolute;
+  left: 0.5rem;
+  top: 45%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #999;
+  transition: color 0.2s;
+}
+
+.clear-search:hover {
+  color: #f44336;
 }

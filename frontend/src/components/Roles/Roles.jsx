@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import Popup from "../Popup";
 
 const Roles = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("active");
   const [allRoles, setAllRoles] = useState([]);
   const [popup, setPopup] = useState({
     show: false,
@@ -11,7 +13,6 @@ const Roles = () => {
     type: "",
     role_id: null,
   });
-  const [showInactive, setShowInactive] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -99,38 +100,73 @@ const Roles = () => {
   return (
     <div>
       <div className="main mt2rem">
-        <h2 className="text-center font-blue fontXL">רשימת תפקידים</h2>
-
-        <div className="add-wrapper">
-          <Link to="/dashboard/add_role" className="btn-add-dash fontBtnDash">
+        <h2 className="text-center font-blue fontXL mp2rem">רשימת תפקידים</h2>
+        <div className="filters-container">
+          <Link to="/dashboard/add_role" className="btn-add-dash fontBtnDash ">
             הוספת תפקיד חדש
           </Link>
-          <button
-            onClick={() => setShowInactive((prev) => !prev)}
-            className="btn-filter-dash fontBtnDash"
+          <select
+            className="status-select"
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
           >
-            {showInactive ? "הסתר תפקידים לא פעילים" : "הצג תפקידים לא פעילים"}
-          </button>
+            <option value="active">הצג תפקידים פעילים בלבד</option>
+            <option value="inactive">הצג תפקידים לא פעילים בלבד</option>
+            <option value="all">הצג את כל התפקידים</option>
+          </select>
+
+          <div className="search-wrapper">
+            <input
+              type="text"
+              className="search-input"
+              placeholder="🔍  חיפוש תפקיד לפי שם ..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            {searchTerm && (
+              <button
+                className="clear-search"
+                onClick={() => setSearchTerm("")}
+                aria-label="נקה חיפוש"
+              >
+                ❌
+              </button>
+            )}
+          </div>
         </div>
 
         <table>
           <thead>
             <tr>
-              <th>מזהה</th>
-              <th>שם תפקיד</th>
-              <th>ניהול משתמשים</th>
-              <th>צפייה בדוחות</th>
-              <th>שייך פניות</th>
-              <th>עריכת קורסים</th>
-              <th>ניהול משימות</th>
-              <th>גישה לנתונים</th>
-              <th>סטטוס</th>
-              <th>פעולות</th>
+              <th className="col5per">מזהה</th>
+              <th className="col10per">שם תפקיד</th>
+              <th className="col5per">ניהול משתמשים</th>
+              <th className="col5per">צפייה בדוחות</th>
+              <th className="col5per">שייך פניות</th>
+              <th className="col5per">עריכת קורסים</th>
+              <th className="col5per">ניהול משימות</th>
+              <th className="col5per">גישה לנתונים</th>
+              <th className="col5per">סטטוס</th>
+              <th className="col10per">פעולות</th>
             </tr>
           </thead>
           <tbody>
             {allRoles
-              .filter((role) => showInactive || role.is_active)
+              .filter((role) => {
+                const term = searchTerm.toLowerCase();
+                const nameMatch = role.role_name.toLowerCase().includes(term);
+                const statusText = role.is_active ? "פעיל" : "לא פעיל";
+                const statusMatch = statusText.includes(term);
+
+                const statusCheck =
+                  statusFilter === "all"
+                    ? true
+                    : statusFilter === "active"
+                    ? role.is_active
+                    : !role.is_active;
+
+                return statusCheck && (nameMatch || statusMatch);
+              })
               .map((role) => (
                 <tr
                   key={role.role_id}
